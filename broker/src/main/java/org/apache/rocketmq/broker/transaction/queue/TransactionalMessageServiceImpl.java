@@ -137,6 +137,7 @@ public class TransactionalMessageServiceImpl implements TransactionalMessageServ
             log.debug("Check topic={}, queues={}", topic, msgQueues);
             for (MessageQueue messageQueue : msgQueues) {
                 long startTime = System.currentTimeMillis();
+                // 半消息队列 queueOffset - > 操作队列 queueOffset
                 MessageQueue opQueue = getOpQueue(messageQueue);
                 long halfOffset = transactionalMessageBridge.fetchConsumeOffset(messageQueue);
                 long opOffset = transactionalMessageBridge.fetchConsumeOffset(opQueue);
@@ -428,6 +429,7 @@ public class TransactionalMessageServiceImpl implements TransactionalMessageServ
     }
 
     // 事务消息队列与操作消息队列一对一
+    // 半消息队列 queueOffset - > 操作队列 queueOffset
     private MessageQueue getOpQueue(MessageQueue messageQueue) {
         MessageQueue opQueue = opQueueMap.get(messageQueue);
         if (opQueue == null) {
