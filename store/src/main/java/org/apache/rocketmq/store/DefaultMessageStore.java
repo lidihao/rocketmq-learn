@@ -562,6 +562,8 @@ public class DefaultMessageStore implements MessageStore {
         return commitLog;
     }
 
+
+    // 读取数据
     public GetMessageResult getMessage(final String group, final String topic, final int queueId, final long offset,
         final int maxMsgNums,
         final MessageFilter messageFilter) {
@@ -590,6 +592,7 @@ public class DefaultMessageStore implements MessageStore {
         // lazy init when find msg.
         GetMessageResult getResult = null;
 
+        // 获取commitLog可读偏移量
         final long maxOffsetPy = this.commitLog.getMaxOffset();
 
         ConsumeQueue consumeQueue = findConsumeQueue(topic, queueId);
