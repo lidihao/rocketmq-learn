@@ -564,6 +564,7 @@ public class DefaultMessageStore implements MessageStore {
 
 
     // 读取数据
+    // 从consumerQueue中读取commitLog中的偏移量，再从commitLog中读取详细的数据
     public GetMessageResult getMessage(final String group, final String topic, final int queueId, final long offset,
         final int maxMsgNums,
         final MessageFilter messageFilter) {
@@ -706,6 +707,8 @@ public class DefaultMessageStore implements MessageStore {
 
                         nextBeginOffset = offset + (i / ConsumeQueue.CQ_STORE_UNIT_SIZE);
 
+
+                        // 如果master服务器没有内存，从从服务器拉取数据
                         long diff = maxOffsetPy - maxPhyOffsetPulling;
                         long memory = (long) (StoreUtil.TOTAL_PHYSICAL_MEMORY_SIZE
                             * (this.messageStoreConfig.getAccessMessageInMemoryMaxRatio() / 100.0));
