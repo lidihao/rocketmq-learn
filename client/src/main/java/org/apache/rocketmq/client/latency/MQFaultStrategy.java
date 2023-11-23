@@ -97,6 +97,7 @@ public class MQFaultStrategy {
         }
     }
 
+    // 计算这个延时时间，下一次什么时候才选择他
     private long computeNotAvailableDuration(final long currentLatency) {
         for (int i = latencyMax.length - 1; i >= 0; i--) {
             if (currentLatency >= latencyMax[i])

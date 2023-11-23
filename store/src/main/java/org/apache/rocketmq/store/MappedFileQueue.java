@@ -38,6 +38,7 @@ public class MappedFileQueue {
 
     private final String storePath;
 
+    // 映射文件大小
     protected final int mappedFileSize;
 
     protected final CopyOnWriteArrayList<MappedFile> mappedFiles = new CopyOnWriteArrayList<MappedFile>();
